@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTCUSD Forecasting Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #eef2f7;
+            --panel: #ffffff;
+            --text: #131722;
+            --muted: #5d6b82;
+            --line: #d7dfeb;
+
+            --nav-bg: #0f172a;
+            --nav-text: #d6deee;
+            --nav-active: #ffffff;
+
+            --card-a: #155eef;
+            --card-b: #0f8fda;
+            --card-c: #119669;
+
+            --shadow: 0 10px 30px rgba(11, 22, 44, 0.08);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "Manrope", sans-serif;
+            background:
+                radial-gradient(circle at 80% 0%, #d6f0ff 0%, rgba(214, 240, 255, 0) 45%),
+                radial-gradient(circle at 15% 15%, #e6f4ea 0%, rgba(230, 244, 234, 0) 40%),
+                var(--bg);
+            color: var(--text);
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #0f172a 0%, #18243d 100%);
+            padding: 24px 18px;
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .brand {
+            font-family: "Space Grotesk", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            color: #fff;
+            margin-bottom: 18px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: var(--nav-text);
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--nav-active);
+            transform: translateX(3px);
+        }
+
+        .main-shell {
+            padding: 24px 20px 28px;
+        }
+
+        .surface {
+            background: var(--panel);
+            border: 1px solid rgba(20, 34, 66, 0.08);
+            box-shadow: var(--shadow);
+            border-radius: var(--radius-lg);
+        }
+
+        .card {
+            border: none;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .kpi-card .card-body {
+            padding: 22px 22px 18px;
+        }
+
+        .kpi-primary { background: linear-gradient(135deg, var(--card-a), #2e90fa); color: #fff; }
+        .kpi-success { background: linear-gradient(135deg, var(--card-c), #17b26a); color: #fff; }
+        .kpi-info    { background: linear-gradient(135deg, var(--card-b), #22c3ee); color: #fff; }
+
+        .kpi-title {
+            font-family: "Space Grotesk", sans-serif;
+            font-weight: 700;
+            font-size: 1.55rem;
+        }
+
+        .kpi-sub {
+            opacity: 0.9;
+            font-size: 0.98rem;
+        }
+
+        .section-title {
+            font-family: "Space Grotesk", sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .table thead th {
+            border-bottom: 1px solid var(--line);
+            color: #25324a;
+            font-weight: 700;
+        }
+
+        .table tbody tr {
+            transition: background 0.16s ease;
+        }
+
+        .table tbody tr:hover {
+            background: #f4f8ff;
+        }
+
+        .list-group-item {
+            border-color: var(--line);
+        }
+
+        .fade-in {
+            animation: rise 0.45s ease both;
+        }
+
+        .fade-in-2 {
+            animation: rise 0.55s ease both;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 767.98px) {
+            .sidebar {
+                min-height: auto;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            .main-shell {
+                padding: 16px 12px 20px;
+            }
+            .kpi-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row g-0">
+            <nav class="col-12 col-md-2 sidebar">
+                <div class="brand">BTC Forecasting</div>
+                <a href="/">Dashboard Overview</a>
+                <a href="/monitoring/">Drift Monitoring</a>
+                <a href="/ab-testing/">A/B Testing</a>
+                <a href="/roi/">ROI Analysis</a>
+            </nav>
+
+            <main class="col-12 col-md-10 main-shell">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

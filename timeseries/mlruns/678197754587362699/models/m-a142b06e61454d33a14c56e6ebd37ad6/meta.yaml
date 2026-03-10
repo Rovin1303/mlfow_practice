@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/678197754587362699/models/m-a142b06e61454d33a14c56e6ebd37ad6/artifacts
+creation_timestamp: 1772786695824
+experiment_id: '678197754587362699'
+last_updated_timestamp: 1772786708216
+model_id: m-a142b06e61454d33a14c56e6ebd37ad6
+model_type: null
+name: model
+source_run_id: 8c397a735c234bd28562d909b42848ef
+status: 2
+status_message: null

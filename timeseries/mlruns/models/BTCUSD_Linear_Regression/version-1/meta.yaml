@@ -1,0 +1,16 @@
+creation_timestamp: 1772786708306
+current_stage: None
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1772786708306
+model_id: m-a142b06e61454d33a14c56e6ebd37ad6
+name: BTCUSD_Linear_Regression
+run_id: 8c397a735c234bd28562d909b42848ef
+run_link: null
+source: models:/m-a142b06e61454d33a14c56e6ebd37ad6
+status: READY
+status_message: null
+storage_location: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/678197754587362699/models/m-a142b06e61454d33a14c56e6ebd37ad6/artifacts
+user_id: null
+version: 1
+workspace: default

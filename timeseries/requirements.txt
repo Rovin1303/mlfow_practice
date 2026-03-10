@@ -1,0 +1,24 @@
+# Core
+django
+djangorestframework
+python-dotenv
+pyyaml
+
+# Data & ML
+pandas
+numpy
+scikit-learn
+tensorflow
+mlflow
+yfinance
+
+# Monitoring & Visualization
+evidently
+plotly
+matplotlib
+statsmodels
+
+# Deployment & Server
+gunicorn
+uvicorn
+whitenoise

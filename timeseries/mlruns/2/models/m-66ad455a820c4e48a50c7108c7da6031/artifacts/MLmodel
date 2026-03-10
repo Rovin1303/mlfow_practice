@@ -1,0 +1,23 @@
+artifact_path: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/2/models/m-66ad455a820c4e48a50c7108c7da6031/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.13.1
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.8.0
+    skops_trusted_types: null
+mlflow_version: 3.10.1
+model_id: m-66ad455a820c4e48a50c7108c7da6031
+model_size_bytes: 767
+model_uuid: m-66ad455a820c4e48a50c7108c7da6031
+prompts: null
+run_id: 9fc6b445cc9c406e83bbf1ac3beea743
+utc_time_created: '2026-03-10 17:14:25.817384'

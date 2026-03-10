@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/239815617893177282/b0f67643170141c3b683c71f3960f634/artifacts
+end_time: 1772786823110
+entry_point_name: ''
+experiment_id: '239815617893177282'
+lifecycle_stage: active
+run_id: b0f67643170141c3b683c71f3960f634
+run_name: calm-fox-193
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1772786787716
+status: 3
+tags: []
+user_id: Rovin

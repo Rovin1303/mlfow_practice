@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2 section-title">Drift Monitoring</h1>
+</div>
+
+<div class="row g-3 fade-in">
+    <div class="col-md-4">
+        <div class="card kpi-card kpi-primary h-100">
+            <div class="card-body">
+                <div class="kpi-sub">Current BTC Price</div>
+                <div class="kpi-title">
+                    {% if latest_btc_price != None %}
+                    ${{ latest_btc_price|floatformat:2 }}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </div>
+                <small>Latest close from processed market data</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card kpi-card kpi-info h-100">
+            <div class="card-body">
+                <div class="kpi-sub">Drift Status</div>
+                <div class="kpi-title">{{ drift.status }}</div>
+                <small>Reference {{ drift.reference_window }}d vs Current {{ drift.current_window }}d</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card kpi-card kpi-success h-100">
+            <div class="card-body">
+                <div class="kpi-sub">Drift Score</div>
+                <div class="kpi-title">
+                    {% if drift.score != None %}
+                    {{ drift.score|floatformat:2 }}
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </div>
+                <small>Computed from mean shift, return shift, and volatility ratio</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-4 fade-in-2">
+    <div class="card-header">
+        <h5 class="mb-0">Distribution Shift Signals</h5>
+    </div>
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div><strong>Mean Price Shift</strong></div>
+                <div>
+                    {% if drift.mean_shift_pct != None %}
+                    {{ drift.mean_shift_pct|floatformat:2 }}%
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div><strong>Return Mean Shift</strong></div>
+                <div>
+                    {% if drift.return_shift_pct != None %}
+                    {{ drift.return_shift_pct|floatformat:3 }}%
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div><strong>Volatility Ratio</strong></div>
+                <div>
+                    {% if drift.volatility_ratio != None %}
+                    {{ drift.volatility_ratio|floatformat:3 }}x
+                    {% else %}
+                    N/A
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr />
+        <small class="text-muted">Sample count used for drift checks: {{ drift.sample_count }}</small>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">Latest Model Forecast Alignment</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Status</th>
+                    <th>Prediction</th>
+                    <th>Market Gap</th>
+                    <th>Accuracy</th>
+                    <th>Source</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for model in model_snapshots %}
+                <tr>
+                    <td>
+                        {{ model.label }}
+                        {% if model.is_best %}
+                        <span class="badge text-bg-success ms-1">Best</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ model.status }}</td>
+                    <td>{% if model.prediction != None %}${{ model.prediction|floatformat:2 }}{% else %}N/A{% endif %}</td>
+                    <td>{% if model.market_gap_pct != None %}{{ model.market_gap_pct|floatformat:2 }}%{% else %}N/A{% endif %}</td>
+                    <td>{% if model.accuracy_pct != None %}{{ model.accuracy_pct|floatformat:2 }}%{% else %}N/A{% endif %}</td>
+                    <td>{{ model.prediction_source }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No model snapshots available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="mb-0">Recent Finished Runs</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-sm table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Run ID</th>
+                    <th>Model</th>
+                    <th>MSE</th>
+                    <th>Started</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for run in recent_runs %}
+                <tr>
+                    <td><code>{{ run.run_id|slice:":8" }}</code></td>
+                    <td>{{ run.model_type }}</td>
+                    <td>{% if run.mse != None %}{{ run.mse|floatformat:4 }}{% else %}N/A{% endif %}</td>
+                    <td>{{ run.start_time }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No finished runs found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

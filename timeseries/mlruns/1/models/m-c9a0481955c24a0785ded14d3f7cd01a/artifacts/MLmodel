@@ -1,0 +1,22 @@
+artifact_path: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/1/models/m-c9a0481955c24a0785ded14d3f7cd01a/artifacts
+flavors:
+  python_function:
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.tensorflow
+    python_version: 3.13.1
+  tensorflow:
+    code: null
+    data: data
+    keras_version: 2.20.0
+    model_type: keras
+    save_format: tf
+mlflow_version: 3.10.1
+model_id: m-c9a0481955c24a0785ded14d3f7cd01a
+model_size_bytes: 433868
+model_uuid: m-c9a0481955c24a0785ded14d3f7cd01a
+prompts: null
+run_id: 69637568cb494b65acab36988a303a13
+utc_time_created: '2026-03-10 18:02:42.496376'

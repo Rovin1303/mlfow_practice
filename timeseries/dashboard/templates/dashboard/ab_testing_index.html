@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">A/B Testing Dashboard</h1>
+    <button class="btn btn-primary">Start New A/B Test</button>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="card-title mb-0">Active Tests</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Test Name</th>
+                        <th>Control (v)</th>
+                        <th>Treatment (v)</th>
+                        <th>Improvement (%)</th>
+                        <th>Status</th>
+                        <th>Started At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for test in active_tests %}
+                    <tr>
+                        <td>{{ test.test_name }}</td>
+                        <td>{{ test.control_model_version }}</td>
+                        <td>{{ test.treatment_model_version }}</td>
+                        <td>
+                            {% if test.improvement_pct >= 0 %}
+                            <span class="badge bg-success">+{{ test.improvement_pct|floatformat:2 }}%</span>
+                            {% else %}
+                            <span class="badge bg-danger">{{ test.improvement_pct|floatformat:2 }}%</span>
+                            {% endif %}
+                        </td>
+                        <td><span class="badge bg-info">{{ test.status }}</span></td>
+                        <td>{{ test.start_date|date:"Y-m-d H:i" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No active A/B tests found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-secondary text-white">
+        <h5 class="card-title mb-0">Past Tests</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Test Name</th>
+                    <th>Winner</th>
+                    <th>Improvement</th>
+                    <th>Ended At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for test in past_tests %}
+                <tr>
+                    <td>{{ test.test_name }}</td>
+                    <td>{{ test.winner_model_version|default:test.treatment_model_version }}</td>
+                    <td>
+                        {% if test.improvement_pct >= 0 %}
+                        +{{ test.improvement_pct|floatformat:2 }}%
+                        {% else %}
+                        {{ test.improvement_pct|floatformat:2 }}%
+                        {% endif %}
+                    </td>
+                    <td>{{ test.end_date|default:test.start_date|date:"Y-m-d H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No past A/B tests found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

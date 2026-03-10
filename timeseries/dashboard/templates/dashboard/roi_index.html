@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">ROI & Business Impact Analysis</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card text-white bg-success">
+            <div class="card-body text-center">
+                <h5 class="card-title">Simulated Trading Profit</h5>
+                <p class="card-text display-4">${{ latest_roi.simulated_profit_usd|floatformat:2 }}</p>
+                <small>Calculated over {{ latest_roi.period }}</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-dark">
+            <div class="card-body text-center">
+                <h5 class="card-title">Risk Reduction</h5>
+                <p class="card-text display-4">{{ latest_roi.risk_reduction_pct|floatformat:1 }}%</p>
+                <small>Reduction in drawdown using model predictions</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% if strategy %}
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Strategy Diagnostics</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2"><strong>Latest Close:</strong> ${{ strategy.latest_close|floatformat:2 }}</div>
+            <div class="col-md-2"><strong>Selected Model:</strong> {{ latest_roi.model_version }}</div>
+            <div class="col-md-2"><strong>Selected Forecast:</strong> ${{ strategy.selected_prediction|floatformat:2 }}</div>
+            <div class="col-md-2"><strong>Implied Move:</strong> {{ strategy.implied_move_pct|floatformat:2 }}%</div>
+            <div class="col-md-2"><strong>Trades:</strong> {{ strategy.trade_count }}</div>
+            <div class="col-md-2"><strong>Win Rate:</strong> {{ strategy.win_rate_pct|floatformat:1 }}%</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Latest Model Forecasts Used</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-sm table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Prediction</th>
+                    <th>Accuracy</th>
+                    <th>Run</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in forecasts %}
+                <tr>
+                    <td>{{ item.model }}</td>
+                    <td>${{ item.prediction|floatformat:2 }}</td>
+                    <td>
+                        {% if item.accuracy_pct != None %}
+                        {{ item.accuracy_pct|floatformat:2 }}%
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </td>
+                    <td><code>{{ item.run_id }}</code></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No finished model forecasts found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card mt-4">
+    <div class="card-header">
+        <h5 class="card-title mb-0">ROI History</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Model Version</th>
+                    <th>Period</th>
+                    <th>Profit (USD)</th>
+                    <th>Risk Reduction</th>
+                    <th>Calculated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in history %}
+                <tr>
+                    <td>{{ entry.model_version }}</td>
+                    <td>{{ entry.period }}</td>
+                    <td>${{ entry.simulated_profit_usd|floatformat:2 }}</td>
+                    <td>{{ entry.risk_reduction_pct }}%</td>
+                    <td>{{ entry.calculated_at|date:"Y-m-d H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No ROI history found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="alert alert-info mt-4" role="alert">
+    <strong>Note:</strong> ROI uses a simulated long-only strategy that enters when implied next-day move exceeds {{ strategy.entry_threshold_pct|floatformat:2 }}% and short-term trend filter is positive.
+</div>
+{% endblock %}

@@ -1,0 +1,7 @@
+artifact_location: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/678197754587362699
+creation_time: 1772781260987
+experiment_id: '678197754587362699'
+last_update_time: 1772781260987
+lifecycle_stage: active
+name: BTCUSD_Linear_Regression
+workspace: default

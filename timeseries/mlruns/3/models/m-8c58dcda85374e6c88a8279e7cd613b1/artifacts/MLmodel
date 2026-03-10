@@ -1,0 +1,20 @@
+artifact_path: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/3/models/m-8c58dcda85374e6c88a8279e7cd613b1/artifacts
+flavors:
+  python_function:
+    data: model.statsmodels
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.statsmodels
+    python_version: 3.13.1
+  statsmodels:
+    code: null
+    data: model.statsmodels
+    statsmodels_version: 0.14.6
+mlflow_version: 3.10.1
+model_id: m-8c58dcda85374e6c88a8279e7cd613b1
+model_size_bytes: 20785429
+model_uuid: m-8c58dcda85374e6c88a8279e7cd613b1
+prompts: null
+run_id: f1ee5634884d4710a8bb80365c5e8b61
+utc_time_created: '2026-03-10 17:31:44.739438'

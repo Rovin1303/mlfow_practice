@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .model-card.best-highlight {
+        border: 2px solid #f59f0b;
+        background: linear-gradient(180deg, #fff9eb, #ffffff);
+    }
+
+    .best-chip {
+        background: linear-gradient(135deg, #f59f0b, #f97316);
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+    }
+</style>
+
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3 fade-in">
+    <div>
+        <h1 class="section-title mb-1">BTCUSD Forecasting Dashboard</h1>
+        <div class="text-secondary">Live price, model forecasts, and MLflow registry health</div>
+    </div>
+    <div class="btn-toolbar">
+        <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">This week</button>
+    </div>
+</div>
+
+<div class="row g-3 fade-in-2">
+    <div class="col-12">
+        <div class="card kpi-card kpi-info">
+            <div class="card-body">
+                <h5 class="card-title">Current BTCUSD Price</h5>
+                <p class="kpi-title mb-1">$ {{ latest_btc_price }}</p>
+                <div class="kpi-sub">Latest close from processed BTCUSD series</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3 mt-1">
+    {% for model in model_snapshots %}
+    <div class="col-12 col-lg-4">
+        <div class="surface p-3 model-card {% if model.is_best %}best-highlight{% endif %}">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                    <h5 class="section-title mb-1">{{ model.label }}</h5>
+                    <div class="text-secondary small">Model forecast snapshot</div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    {% if model.is_best %}
+                    <span class="badge best-chip">BEST</span>
+                    {% endif %}
+                    <span class="badge {% if model.status == 'FINISHED' %}bg-success{% else %}bg-secondary{% endif %}">
+                        {{ model.status }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="text-secondary small">Forecast Price</div>
+            <div class="h4 mb-2">
+                {% if model.prediction != None %}$ {{ model.prediction|floatformat:2 }}{% else %}N/A{% endif %}
+            </div>
+            <div class="text-secondary small mb-2">Source: {{ model.prediction_source|default:'unavailable' }}</div>
+
+            <div class="row g-2">
+                <div class="col-6">
+                    <div class="text-secondary small">Gap vs Current</div>
+                    <div class="fw-semibold">
+                        {% if model.market_gap_pct != None %}{{ model.market_gap_pct|floatformat:2 }}%{% else %}N/A{% endif %}
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="text-secondary small">Accuracy</div>
+                    <div class="fw-semibold">
+                        {% if model.accuracy_pct != None %}{{ model.accuracy_pct|floatformat:2 }}%{% else %}N/A{% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-secondary small mt-1">
+                RMSE (USD): {% if model.rmse_usd != None %}{{ model.rmse_usd|floatformat:2 }}{% else %}N/A{% endif %}
+            </div>
+
+            <div class="text-secondary small mt-2">Run {{ model.run_id }} | {{ model.start_time }}</div>
+            {% if model.meta %}
+            <div class="text-secondary small">{{ model.meta }}</div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if best_model %}
+<div class="surface p-3 mt-3">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div>
+            <h5 class="section-title mb-1">Best Forecast Selected: {{ best_model.label }}</h5>
+            <div class="text-secondary small">Selection uses recent finished runs, shared validation error metrics, and market-deviation penalty.</div>
+        </div>
+        <div class="text-end">
+            <div class="text-secondary small">Best Forecast</div>
+            <div class="h5 mb-0">$ {{ best_model.prediction|floatformat:2 }}</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row g-3 mt-1">
+    <div class="col-12 col-xl-8">
+        <div class="surface p-3">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="section-title mb-0">Recent Experiment Runs (Finished Only)</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Run ID</th>
+                            <th>Start Time</th>
+                            <th>Model Type</th>
+                            <th>MSE</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for run in runs %}
+                        <tr>
+                            <td><code>{{ run.run_id|truncatechars:10 }}</code></td>
+                            <td>{{ run.start_time }}</td>
+                            <td>{{ run.model_type }}</td>
+                            <td>{% if run.mse != None %}{{ run.mse|floatformat:6 }}{% else %}N/A{% endif %}</td>
+                            <td><span class="badge bg-success">{{ run.status }}</span></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-secondary py-4">No finished experiment runs found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-xl-4">
+        <div class="surface p-3">
+            <h5 class="section-title mb-3">Model Registry Status</h5>
+            <ul class="list-group list-group-flush">
+                {% for item in registry_statuses %}
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <div>
+                        <div>{{ item.name }} (v{{ item.latest_version }})</div>
+                        <div class="text-secondary small">Total latest versions: {{ item.versions }}</div>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">{{ item.latest_stage }}</span>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-secondary text-center px-0">No registered models found.</li>
+                {% endfor %}
+            </ul>
+            <div class="text-secondary small mt-2">Registered models: {{ registered_models_count }} | Total latest versions: {{ registered_versions_count }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="surface p-3 mt-3">
+    <h5 class="section-title mb-2">BTCUSD Price Forecast Visualization</h5>
+    <div id="forecast-chart" style="height: 320px; border-radius: 12px; border: 1px dashed #c5d2e6; background: linear-gradient(180deg, #fbfdff, #f4f8ff); display: flex; align-items: center; justify-content: center;">
+        <p class="text-secondary mb-0">Interactive Plotly visualization area</p>
+    </div>
+</div>
+{% endblock %}

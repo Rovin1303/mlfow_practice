@@ -1,0 +1,30 @@
+artifact_path: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/1/models/m-ac785630e1f940a2995c7191108e69a3/artifacts
+flavors:
+  python_function:
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.tensorflow
+    python_version: 3.13.1
+  tensorflow:
+    code: null
+    data: data
+    keras_version: 2.20.0
+    model_type: keras
+    save_format: tf
+is_signature_from_type_hint: false
+mlflow_version: 3.10.1
+model_id: m-ac785630e1f940a2995c7191108e69a3
+model_size_bytes: 433868
+model_uuid: m-ac785630e1f940a2995c7191108e69a3
+prompts: null
+run_id: dec540db7db14ffdb52fe7887f12f204
+signature:
+  inputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1, 60,
+    5]}}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1,
+    1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-03-10 17:44:10.055786'

@@ -1,0 +1,4 @@
+mlflow==3.10.1
+cloudpickle==3.1.2
+numpy==2.4.2
+tensorflow==2.20.0

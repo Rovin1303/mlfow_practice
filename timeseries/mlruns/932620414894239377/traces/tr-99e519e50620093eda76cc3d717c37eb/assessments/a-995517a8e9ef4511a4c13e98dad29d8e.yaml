@@ -1,0 +1,14 @@
+assessment_id: a-995517a8e9ef4511a4c13e98dad29d8e
+assessment_name: expected_response
+create_time: '2026-03-06T05:54:46.242Z'
+expectation:
+  value: I understand login issues are frustrating. Try 'Forgot Password' first, or
+    I can manually reset your account access.
+last_update_time: '2026-03-06T05:54:46.242Z'
+metadata:
+  demo: 'true'
+source:
+  source_id: demo_annotator
+  source_type: HUMAN
+trace_id: tr-99e519e50620093eda76cc3d717c37eb
+valid: true

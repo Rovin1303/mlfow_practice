@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/678197754587362699/26b0ea284be946aaa5b123aff88fbd2b/artifacts
+end_time: 1772781283093
+entry_point_name: ''
+experiment_id: '678197754587362699'
+lifecycle_stage: active
+run_id: 26b0ea284be946aaa5b123aff88fbd2b
+run_name: Linear_Regression_Baseline
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1772781261796
+status: 4
+tags: []
+user_id: Rovin

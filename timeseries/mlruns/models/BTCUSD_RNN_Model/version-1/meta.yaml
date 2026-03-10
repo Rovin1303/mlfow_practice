@@ -1,0 +1,16 @@
+creation_timestamp: 1772786823010
+current_stage: None
+deployment_job_state: null
+description: null
+last_updated_timestamp: 1772786823010
+model_id: m-cd3aff9e99764337b86ce831b45382be
+name: BTCUSD_RNN_Model
+run_id: b0f67643170141c3b683c71f3960f634
+run_link: null
+source: models:/m-cd3aff9e99764337b86ce831b45382be
+status: READY
+status_message: null
+storage_location: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/239815617893177282/models/m-cd3aff9e99764337b86ce831b45382be/artifacts
+user_id: null
+version: 1
+workspace: default

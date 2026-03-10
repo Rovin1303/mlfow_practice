@@ -1,0 +1,14 @@
+execution_duration_ms: 1543
+request_preview: '{"query": "Review this Python function that calculates factorial.",
+  "template_variables": {"language": "python", "code": "def factorial(n):\n    if
+  n == 0:\n        return 1\n    return n * factorial(n - 1)", "query": "Review this
+  Python function that calculates factorial.", "focus_areas": "security, performance,
+  readability", "severity_levels": "critical, warning, suggestion"}}'
+request_time: '2026-03-01T09:23:31.692Z'
+response_preview: '{"response": "The code works but could be improved for performance."}'
+state: OK
+trace_id: tr-b1477c7c61b1fb7d5c201bf44cd9d314
+trace_location:
+  mlflow_experiment:
+    experiment_id: '932620414894239377'
+  type: MLFLOW_EXPERIMENT

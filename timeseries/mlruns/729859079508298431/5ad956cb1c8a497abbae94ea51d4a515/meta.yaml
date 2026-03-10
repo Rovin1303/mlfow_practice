@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/729859079508298431/5ad956cb1c8a497abbae94ea51d4a515/artifacts
+end_time: 1772792344141
+entry_point_name: ''
+experiment_id: '729859079508298431'
+lifecycle_stage: active
+run_id: 5ad956cb1c8a497abbae94ea51d4a515
+run_name: ARIMA_Model
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1772792343771
+status: 3
+tags: []
+user_id: Rovin

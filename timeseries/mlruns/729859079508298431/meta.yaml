@@ -1,0 +1,7 @@
+artifact_location: file:///C:/Users/Rovin/mlfow/timeseries/mlruns/729859079508298431
+creation_time: 1772786752029
+experiment_id: '729859079508298431'
+last_update_time: 1772786752029
+lifecycle_stage: active
+name: BTCUSD_ARIMA_Forecasting
+workspace: default
